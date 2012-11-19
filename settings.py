@@ -1,6 +1,6 @@
 from server import *
 USERNAME = 'dan'
-PASSWORD = 'dodge05'
+PASSWORD = 'breakme'
 UPLOAD_FOLDER = '/tmp'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','vcf','csv','mp3','mp4','mpg','avi','.r','.py'])
 SECRET_KEY = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT13\\x8b83'
