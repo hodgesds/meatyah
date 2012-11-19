@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block body %}
+ <div class="row-fluid">
+    <div class="hero-unit span4 offset2">
+        <h2>Login</h2>
+            {% if error %}
+            <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Warning!</strong> Best check yo self, you're not looking too good.</p>
+            </div>
+            {{ error }}
+        {% endif %}
+       <form action="{{ url_for('login') }}" method=post>
+        <dl>
+            <dt>Username:
+            <dd><input type=text name=username>
+            <dt>Password:
+            <dd><input type=password name=password>
+            <dd><input type=submit value=Login>
+        </dl>
+        </form>
+    </div>
+    </div>
+
+{% endblock %}

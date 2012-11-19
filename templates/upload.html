@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="hero-unit span4 offset4">
+<h2>Upload</h2>
+<form action="/upload" enctype="multipart/form-data" method="POST" >
+<input type="file" name=ufile />
+<br><br>
+<p>Choose upload folder:</p>
+<select name=ufolder>
+  <option value="music">Music</option>
+  <option value="movies">Movies</option>
+  <option value="pics">Photos</option>
+</select>
+<br>
+<input type="submit" class="btn btn-large btn-primary" value="Upload" ><br><br>
+</form>
+</div>
+{% endblock %}
+

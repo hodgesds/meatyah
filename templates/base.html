@@ -2,13 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Hodges Media Server</title>
+    <title>Meaty Ah!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- Le styles -->
+    <link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap.min.css">
     <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-ie6.min.css"><![endif]-->
+    <link rel="stylesheet" href="/static/css/bootstrap-image-gallery.min.css">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -40,101 +43,65 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">Hodges Media Server</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li><a href="/movies">Movies</a></li>
-              <li><a href="/music">Music</a></li>
-	      <li><a href="/photos">Photos</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Upload <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a data-toggle="modal" href="#up_photo">Photos</a></li>
-                  <li><a data-toggle="modal" href="#up_music">Music</a></li>
-                  <li><a data-toggle="modal" href="#up_movie">Movies</a></li>
+          <a class="brand" href="/">Home</a>
+          <ul class="nav">
+                  <li><a href="/music">Music</a></li>
+                  <li><a href="/movies">Movies</a></li>
+                  <li><a href="/pics">Pics</a></li>
+                  <li><a href="/upload">Upload</a></li>
                 </ul>
-              </li>
-            </ul>
-            <form class="navbar-form pull-right search">
-		  <input type="text" class="input-medium search-query">
-		  <button type="submit" class="btn">Search</button>
-            </form>
+          {% block topnav %}
+          
+          {% endblock %}
+            {% if session.logged_in %}
+                </ul>
+                <a href="{{ url_for('logout') }}" class="navbar pull-right btn btn-danger" style="color:white;">Log out</a>
+            {% endif %}
+          </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
-
-    <div class="container">
-
-      <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-      </div>
-
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="span4">
-          <h2>Movies</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-        <div class="span4">
-          <h2>Music</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-       </div>
-        <div class="span4">
-          <h2>Media</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-      </div>
-      <hr>
  
-<div id="up_photo" class="modal hide fade in" style="display: none; ">
-            <div class="modal-header">
-              <a class="close" data-dismiss="modal">×</a>
-              <h3>This is a Modal Heading</h3>
-            </div>
-            <div class="modal-body">
-              <h4>Text in a modal</h4>
-              <p>You can add some text here.</p>		        
-            </div>
-            <div class="modal-footer">
-              <a href="#" class="btn btn-danger" data-dismiss="modal">Close</a>
-            </div>
-          </div>
-<div id="up_music" class="modal hide fade in" style="display: none; ">
-            <div class="modal-header">
-              <a class="close" data-dismiss="modal">×</a>
-              <h3>This is a Modal Heading</h3>
-            </div>
-            <div class="modal-body">
-              <h4>Text in a modal</h4>
-              <p>You can add some text here.</p>		        
-            </div>
-            <div class="modal-footer">
-              <a href="#" class="btn btn-danger" data-dismiss="modal">Close</a>
-            </div>
-          </div>
-<div id="up_movie" class="modal hide fade in" style="display: none; ">
-            <div class="modal-header">
-              <a class="close" data-dismiss="modal">×</a>
-              <h3>This is a Modal Heading</h3>
-            </div>
-            <div class="modal-body">
-              <h4>Text in a modal</h4>
-              <p>You can add some text here.</p>		        
-            </div>
-            <div class="modal-footer">
-              <a href="#" class="btn btn-danger" data-dismiss="modal">Close</a>
-            </div>
-          </div>
+   <!-- messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category,message in messages %}
+       <div class="row-fluid">
+       {% if category=="error" %}
+            <div class="alert alert-error span4 offset4">
+       {% endif %}
+       {% if category=="success" %}
+            <div class="alert alert-success span4 offset4">
+       {% endif %}
+       {% if category=="info" %}
+            <div class="alert alert-info span4 offset4">
+       {% endif %}    
+       {% if category=="alert" %}
+            <div class="alert span4 offset4">
+       {% endif %}    
+        <button type="button" class="close" data-dismiss="alert">×</button>
+       <div class=flash>{{ message }}</div>
+        </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    
+   
+    
+    <!-- Main content -->
+    <div class="row-fluid">
+                 
+      {% block body %}
+
+      {% endblock %}
+ 
+    </div>
 <!-- Footers -->
+      <hr>
       <footer>
-        <p>&copy; Hodges 2012</p>
+        <p>&copy; Meaty Ah! 2012</p>
       </footer>
 
     </div> <!-- /container -->
@@ -155,7 +122,8 @@
     <script src="/static/js/bootstrap-collapse.js"></script>
     <script src="/static/js/bootstrap-carousel.js"></script>
     <script src="/static/js/bootstrap-typeahead.js"></script>
-
+     {% block javascript %}
+     {% endblock %}
   </body>
 </html>
 
